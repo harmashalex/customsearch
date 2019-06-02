@@ -1,4 +1,4 @@
-package com.harmashalex.customsearch.data.entity.api.response
+package com.harmashalex.customsearch.data.repository.source.remote.response
 
 import com.harmashalex.customsearch.data.entity.SearchItem
 import com.squareup.moshi.Json

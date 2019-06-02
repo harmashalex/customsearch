@@ -17,8 +17,8 @@ import android.view.ViewGroup
 import com.harmashalex.customsearch.R
 import com.harmashalex.customsearch.data.entity.SearchItem
 import com.harmashalex.customsearch.data.entity.SearchResult
-import com.harmashalex.customsearch.data.entity.api.ErrorResponse
-import com.harmashalex.customsearch.data.entity.api.SuccessResponse
+import com.harmashalex.customsearch.data.repository.source.remote.ErrorResponse
+import com.harmashalex.customsearch.data.repository.source.remote.SuccessResponse
 import com.harmashalex.customsearch.di.DaggerAppComponent
 import javax.inject.Inject
 
@@ -86,7 +86,9 @@ class SearchFragment : Fragment(), ClickDelegate {
     }
 
     override fun showLastQueryClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewAdapter.searchItems.clear()
+        viewAdapter.notifyDataSetChanged()
+        searchViewModel.getLastSearchResult()
     }
 
     override fun openInExternalBrowser(link: String) {

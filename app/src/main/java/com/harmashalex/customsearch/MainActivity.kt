@@ -6,8 +6,6 @@ import android.util.Log
 import com.harmashalex.customsearch.ui.search.SearchFragment
 import io.reactivex.plugins.RxJavaPlugins
 
-
-
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.java.simpleName
 

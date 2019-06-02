@@ -4,7 +4,7 @@
 
     <ImageView
             android:id="@+id/iv_cover_image"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:layout_width="255dp"
             android:layout_height="100dp"/>
@@ -12,9 +12,15 @@
     <EditText
             android:id="@+id/et_search"
             android:layout_below="@id/iv_cover_image"
+            android:hint="Enter your query..."
             android:layout_width="255dp"
+            android:background="@drawable/et_search_background"
+            android:textCursorDrawable="@null"
             android:layout_centerHorizontal="true"
+            android:textSize="18dp"
+            android:singleLine="true"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"/>

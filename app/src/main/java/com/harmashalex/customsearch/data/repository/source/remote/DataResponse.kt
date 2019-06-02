@@ -1,4 +1,4 @@
-package com.harmashalex.customsearch.data.entity.api
+package com.harmashalex.customsearch.data.repository.source.remote
 
 sealed class DataResponse
 
