@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/iv_cover_image"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="255dp"
+            android:layout_height="100dp"/>
+
+    <EditText
+            android:id="@+id/et_search"
+            android:layout_below="@id/iv_cover_image"
+            android:layout_width="255dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"/>
+
+    <LinearLayout
+            android:id="@+id/ll_buttons"
+            android:orientation="horizontal"
+            android:layout_alignLeft="@id/et_search"
+            android:layout_alignRight="@id/et_search"
+            android:layout_below="@id/et_search"
+            android:weightSum="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:text="Search"
+                android:id="@+id/btn_search"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:text="Stop"
+                android:id="@+id/btn_stop_search"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:text="Last"
+                android:id="@+id/btn_last_search"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
