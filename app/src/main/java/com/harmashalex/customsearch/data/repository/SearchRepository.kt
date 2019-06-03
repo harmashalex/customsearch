@@ -6,13 +6,11 @@ import com.harmashalex.customsearch.data.repository.source.local.LocalSearchData
 import com.harmashalex.customsearch.data.repository.source.remote.RemoteSearchDataSource
 import com.harmashalex.customsearch.data.repository.source.remote.SuccessResponse
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(val localDataSource: LocalSearchDataSource, val remoteDataSource: RemoteSearchDataSource): SearchDataSource {
     override fun getLastSearchResult(): Flowable<DataResponse> {
-        return localDataSource.getLastSearchResult().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return localDataSource.getLastSearchResult()
     }
 
     override fun search(query: String, startIndex: Int, count: Int): Flowable<DataResponse> {

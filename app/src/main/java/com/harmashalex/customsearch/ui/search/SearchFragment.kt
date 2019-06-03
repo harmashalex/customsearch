@@ -20,6 +20,7 @@ import com.harmashalex.customsearch.data.entity.SearchResult
 import com.harmashalex.customsearch.data.repository.source.remote.ErrorResponse
 import com.harmashalex.customsearch.data.repository.source.remote.SuccessResponse
 import com.harmashalex.customsearch.di.DaggerAppComponent
+import com.harmashalex.customsearch.util.Utils
 import javax.inject.Inject
 
 class SearchFragment : Fragment(), ClickDelegate {
@@ -57,7 +58,7 @@ class SearchFragment : Fragment(), ClickDelegate {
         searchViewModel = ViewModelProviders.of(this, viewModeFactory).get(SearchViewModel::class.java)
         searchViewModel.searchLiveData.observe(this, Observer {
             when(it) {
-                is SuccessResponse<*> -> addItemsToList((it.data as SearchResult).searchItems)
+                is SuccessResponse<*> -> onSuccessSearch((it.data as SearchResult).searchItems)
                 is ErrorResponse -> Log.e(TAG, "Error code=${it.errorCode} , message=${it.message}")
             }
         })
@@ -65,20 +66,34 @@ class SearchFragment : Fragment(), ClickDelegate {
         return searchRecyclerView
     }
 
+    private fun onSuccessSearch(searchItems: List<SearchItem>) {
+        addItemsToList(searchItems)
+        if (searchViewModel.canContinueSearch()) {
+            searchViewModel.searchNext()
+        }
+    }
+
     private fun addItemsToList(searchItems: List<SearchItem>) {
-        viewAdapter.searchItems.addAll(searchItems)
-        viewAdapter.notifyDataSetChanged()
+        if (searchItems.isEmpty()) {
+            Utils.showToastMessage(context!!, "Nothing to show")
+        } else {
+            viewAdapter.searchItems.addAll(searchItems)
+            viewAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun onSearchClicked(query: String) {
-        viewAdapter.searchItems.clear()
-        viewAdapter.notifyDataSetChanged()
-
+        clearList()
         if (!TextUtils.isEmpty(query)) {
             searchViewModel.search(query)
         } else {
-            //TODO show message
+            Utils.showToastMessage(context!!, "Enter your query")
         }
+    }
+
+    private fun clearList() {
+        viewAdapter.searchItems.clear()
+        viewAdapter.notifyDataSetChanged()
     }
 
     override fun onStopSearchClicked() {
@@ -86,8 +101,7 @@ class SearchFragment : Fragment(), ClickDelegate {
     }
 
     override fun showLastQueryClicked() {
-        viewAdapter.searchItems.clear()
-        viewAdapter.notifyDataSetChanged()
+        clearList()
         searchViewModel.getLastSearchResult()
     }
 

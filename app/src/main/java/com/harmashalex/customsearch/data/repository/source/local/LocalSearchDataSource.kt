@@ -8,13 +8,15 @@ import com.harmashalex.customsearch.data.repository.source.local.database.AppDat
 import com.harmashalex.customsearch.data.repository.source.remote.SuccessResponse
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LocalSearchDataSource @Inject constructor(val database: AppDatabase) : SearchDataSource {
     private val TAG = LocalSearchDataSource::class.java.simpleName
 
     override fun getLastSearchResult(): Flowable<DataResponse> {
-        return Flowable.create({
+        return Flowable.create<DataResponse>({
             val searchResult = database.searchDao().getLastSearchResult()
             if(searchResult.isNotEmpty()) {
                 it.onNext(SuccessResponse(searchResult[0]))
@@ -22,6 +24,8 @@ class LocalSearchDataSource @Inject constructor(val database: AppDatabase) : Sea
                 it.onComplete()
             }
         }, BackpressureStrategy.BUFFER)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun search(query: String, startIndex: Int, count: Int): Flowable<DataResponse> {

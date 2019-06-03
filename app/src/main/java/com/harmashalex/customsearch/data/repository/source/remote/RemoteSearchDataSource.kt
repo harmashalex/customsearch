@@ -1,18 +1,12 @@
 package com.harmashalex.customsearch.data.repository.source.remote
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
 import com.harmashalex.customsearch.data.entity.SearchItem
 import com.harmashalex.customsearch.data.entity.SearchResult
-import com.harmashalex.customsearch.data.entity.api.DataResponse
-import com.harmashalex.customsearch.data.entity.api.ErrorResponse
-import com.harmashalex.customsearch.data.entity.api.SuccessResponse
 import com.harmashalex.customsearch.data.entity.exception.RequestException
 import com.harmashalex.customsearch.data.repository.SearchDataSource
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -23,8 +17,8 @@ class RemoteSearchDataSource @Inject constructor(val searchEngine: SearchEngine)
     private val TAG = RemoteSearchDataSource::class.java.simpleName
     private val client = OkHttpClient()
 
-    override fun getLastSearchResult() {
-        //should stay empty body
+    override fun getLastSearchResult(): Flowable<DataResponse> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun search(query: String, startIndex: Int, count: Int): Flowable<DataResponse> {
@@ -38,7 +32,14 @@ class RemoteSearchDataSource @Inject constructor(val searchEngine: SearchEngine)
                 val secondSearchItemsList = mapSearch(it.second)?.items
                 firstSearchItemsList?.let { mergedSearchItemList.addAll(it) }
                 secondSearchItemsList?.let { mergedSearchItemList.addAll(it) }
-                Flowable.just(SuccessResponse(SearchResult(query, mergedSearchItemList)))
+                Flowable.just(
+                    SuccessResponse(
+                        SearchResult(
+                            query,
+                            mergedSearchItemList
+                        )
+                    )
+                )
             }
     }
 
