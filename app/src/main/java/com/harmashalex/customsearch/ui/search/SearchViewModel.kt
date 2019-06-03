@@ -19,7 +19,7 @@ class SearchViewModel
     private var startIndex = 1
     private var cancelSearch = false
     private var canContinueSearch = true
-    private lateinit var currentQuery: String
+    private var currentQuery: String = ""
 
     val searchLiveData = MutableLiveData<DataResponse>()
     var searchDisposable: Disposable? = null
@@ -49,6 +49,7 @@ class SearchViewModel
 
     fun getLastSearchResult() {
         dispose()
+        canContinueSearch = false
         searchDisposable = searchRepository.getLastSearchResult().subscribe{
             searchLiveData.value = it
         }

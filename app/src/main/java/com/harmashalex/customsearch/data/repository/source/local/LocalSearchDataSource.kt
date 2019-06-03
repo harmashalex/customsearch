@@ -34,6 +34,7 @@ class LocalSearchDataSource @Inject constructor(val database: AppDatabase) : Sea
 
     fun saveLastSearch(searchResult: SearchResult) {
         Log.d(TAG, "Save last search result: $searchResult")
-        database.searchDao().insert(searchResult)
+        if (!searchResult.searchItems.isEmpty())
+         database.searchDao().insert(searchResult)
     }
 }
